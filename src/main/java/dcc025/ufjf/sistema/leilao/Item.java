@@ -25,7 +25,16 @@ public class Item {
         this.lances = new ArrayList<>();
         this.arrematado = false;
     }
-
+    
+    public double getMaiorLance(){
+        double maiorLance = 0;
+        for(Lance lance : lances){
+            if(lance.getValor() > maiorLance)
+                maiorLance = lance.getValor();
+        }
+        return maiorLance;
+    }
+    
     /**
      * @return the titulo
      */

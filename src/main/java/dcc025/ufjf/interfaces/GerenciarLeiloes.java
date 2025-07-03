@@ -2,6 +2,7 @@ package dcc025.ufjf.interfaces;
 
 import dcc025.ufjf.sistema.leilao.Leilao;
 import dcc025.ufjf.sistema.leilao.Leiloeiro;
+import dcc025.ufjf.sistema.leilao.Usuario;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,7 @@ import java.util.Map;
  */
 public class GerenciarLeiloes extends JFrame {
 
-    private Leiloeiro leiloeiro;
+    private Usuario usuario;
 
     private DefaultListModel<String> listaLeiloesModel;
     private JList<String> listaLeiloes;
@@ -26,8 +27,8 @@ public class GerenciarLeiloes extends JFrame {
     private JButton botaoEncerrar;
     private JButton botaoVoltar;
 
-    public GerenciarLeiloes(Leiloeiro leiloeiro) {
-        this.leiloeiro = leiloeiro;
+    public GerenciarLeiloes(Usuario usuario) {
+        this.usuario = usuario;
 
         setTitle("Gerenciar Leilões");
         setSize(700, 500);
@@ -48,7 +49,8 @@ public class GerenciarLeiloes extends JFrame {
 
         JPanel painelBotoes = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
         painelBotoes.add(botaoVisualizar);
-        painelBotoes.add(botaoEncerrar);
+        if (usuario instanceof Leiloeiro)
+            painelBotoes.add(botaoEncerrar);
         painelBotoes.add(botaoVoltar);
 
         // Layout principal
@@ -67,9 +69,9 @@ public class GerenciarLeiloes extends JFrame {
                 if (indexSelecionado != -1) {
                     String textoSelecionado = listaLeiloesModel.getElementAt(indexSelecionado);
                     int codigoLeilao = Integer.parseInt(textoSelecionado.split(" ")[1]);
-                    Leilao leilao = leiloeiro.getLeiloesAtivos().get(codigoLeilao);
+                    Leilao leilao = usuario.getLeiloesAtivos().get(codigoLeilao);
                     System.out.println(leilao.getItens());
-                    VisualizarLeilao telaVisualizar = new VisualizarLeilao(leilao);
+                    VisualizarLeilao telaVisualizar = new VisualizarLeilao(leilao, usuario);
                     telaVisualizar.setVisible(true);
                 } else {
                     JOptionPane.showMessageDialog(null, "Selecione um leilão para encerrar.");
@@ -77,21 +79,9 @@ public class GerenciarLeiloes extends JFrame {
             }
         });
 
-        botaoEncerrar.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int indexSelecionado = listaLeiloes.getSelectedIndex();
-                if (indexSelecionado != -1) {
-                    String textoSelecionado = listaLeiloesModel.getElementAt(indexSelecionado);
-                    int codigoLeilao = Integer.parseInt(textoSelecionado.split(" ")[1]);
-
-                    leiloeiro.encerrarLeilao(codigoLeilao);
-                    listaLeiloesModel.remove(indexSelecionado);
-
-                    JOptionPane.showMessageDialog(null, "Leilão encerrado com sucesso.");
-                } else {
-                    JOptionPane.showMessageDialog(null, "Selecione um leilão para encerrar.");
-                }
+        botaoEncerrar.addActionListener((ActionEvent e) -> {
+            if (usuario instanceof Leiloeiro) {
+                encerrarLeilao((Leiloeiro) usuario);
             }
         });
 
@@ -105,7 +95,7 @@ public class GerenciarLeiloes extends JFrame {
 
     // Carregar os leilões ativos no formato solicitado
     private void carregarLeiloes() {
-        Map<Integer, Leilao> leiloesAtivos = leiloeiro.getLeiloesAtivos();
+        Map<Integer, Leilao> leiloesAtivos = usuario.getLeiloesAtivos();
         SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
 
         listaLeiloesModel.clear();
@@ -114,6 +104,21 @@ public class GerenciarLeiloes extends JFrame {
             String descricao = "Código: " + leilao.getCodigo() + " / Data de início: " + dataInicio;
 
             listaLeiloesModel.addElement(descricao);
+        }
+    }
+    
+    private void encerrarLeilao(Leiloeiro leiloeiro) {
+        int indexSelecionado = listaLeiloes.getSelectedIndex();
+        if (indexSelecionado != -1) {
+            String textoSelecionado = listaLeiloesModel.getElementAt(indexSelecionado);
+            int codigoLeilao = Integer.parseInt(textoSelecionado.split(" ")[1]);
+
+            leiloeiro.encerrarLeilao(codigoLeilao);
+            listaLeiloesModel.remove(indexSelecionado);
+
+            JOptionPane.showMessageDialog(null, "Leilão encerrado com sucesso.");
+        } else {
+            JOptionPane.showMessageDialog(null, "Selecione um leilão para encerrar.");
         }
     }
 }

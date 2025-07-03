@@ -25,7 +25,7 @@ public class Leilao {
         this.codigo = codAtual++;
         this.leiloeiro = leiloeiro;
         this.participantes = new HashMap<>();
-        this.itens = new HashSet<>();
+        this.itens = itens;
         this.inicio = new Date();
     }
 

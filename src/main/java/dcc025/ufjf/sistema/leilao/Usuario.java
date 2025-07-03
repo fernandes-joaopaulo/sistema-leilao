@@ -1,13 +1,14 @@
 package dcc025.ufjf.sistema.leilao;
 
 import dcc025.ufjf.auxiliar.Email;
+import java.util.Map;
 
 /**
  *
  * @author Joao Paulo
  * Classe pai que define a estrutura de todos os usuários do sistema
  */
-public class Usuario {
+public abstract class Usuario {
     
     private final int id;
     private static int idAtual = 0;
@@ -23,6 +24,8 @@ public class Usuario {
         this.email = email;
         this.senha = senha;
     }
+    
+    public abstract Map<Integer, Leilao> getLeiloesAtivos();
 
     /**
      * @return the id

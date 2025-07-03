@@ -2,6 +2,8 @@ package dcc025.ufjf.interfaces;
 
 import dcc025.ufjf.sistema.leilao.Item;
 import dcc025.ufjf.sistema.leilao.Leilao;
+import dcc025.ufjf.sistema.leilao.Usuario;
+import dcc025.ufjf.sistema.leilao.Participante;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +18,7 @@ public class VisualizarLeilao extends JFrame {
 
     private Leilao leilao;
 
-    public VisualizarLeilao(Leilao leilao) {
+    public VisualizarLeilao(Leilao leilao, Usuario usuario) {
         this.leilao = leilao;
 
         setTitle("Detalhes do Leilão");
@@ -43,7 +45,7 @@ public class VisualizarLeilao extends JFrame {
         // Painel central com os itens
         JPanel painelItens = new JPanel();
         painelItens.setLayout(new BoxLayout(painelItens, BoxLayout.Y_AXIS));
-        
+
         for (Item item : leilao.getItens()) {
             JPanel painelItem = new JPanel(new BorderLayout(10, 10));
             painelItem.setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -60,11 +62,21 @@ public class VisualizarLeilao extends JFrame {
             // Descrição do item
             String descricaoItem = "<html><b>Título:</b> " + item.getTitulo()
                     + "<br><b>Descrição:</b> " + item.getDescricao()
-                    + "<br><b>Lance Mínimo:</b> R$ " + item.getLanceMinimo() + "</html>";
+                    + "<br><b>Lance Mínimo:</b> R$ " + item.getLanceMinimo()
+                    + "<br><b>Maior Lance:</b> " + item.getMaiorLance() + "</html>";
             JLabel labelDescricao = new JLabel(descricaoItem);
 
+            JPanel painelDescricaoEBotao = new JPanel(new BorderLayout(10, 10));
+            painelDescricaoEBotao.add(labelDescricao, BorderLayout.CENTER);
+            
+            if(usuario instanceof Participante){
+                // Cria botão de lance
+                JButton botaoLance = criaBotaoLance(item);
+                painelDescricaoEBotao.add(botaoLance, BorderLayout.EAST);
+            }
+
             painelItem.add(labelImagem, BorderLayout.WEST);
-            painelItem.add(labelDescricao, BorderLayout.CENTER);
+            painelItem.add(painelDescricaoEBotao, BorderLayout.CENTER);
 
             painelItens.add(painelItem);
             painelItens.add(Box.createVerticalStrut(10));
@@ -84,5 +96,18 @@ public class VisualizarLeilao extends JFrame {
 
         add(painelPrincipal);
     }
+    
+    /**
+     * Cria o botão de dar lance para um item específico.
+     */
+    private JButton criaBotaoLance(Item item) {
+        JButton botaoLance = new JButton("Dar Lance");
 
+        botaoLance.addActionListener(e -> {
+            JOptionPane.showMessageDialog(this, "Função de dar lance ainda não implementada para: " + item.getTitulo());
+            // Aqui você pode abrir uma nova tela para digitar o valor do lance
+        });
+
+        return botaoLance;
+    }
 }

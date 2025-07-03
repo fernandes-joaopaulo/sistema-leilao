@@ -1,6 +1,8 @@
 package dcc025.ufjf.sistema.leilao;
 
 import dcc025.ufjf.auxiliar.Email;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  *
@@ -9,10 +11,21 @@ import dcc025.ufjf.auxiliar.Email;
  */
 public class Participante extends Usuario {
 
+    private Map<Integer, Leilao> leiloesAtivos;
+    
     public Participante(String nome, String cpf, Email email, String senha) {
         super(nome, cpf, email, senha);
+        this.leiloesAtivos = new HashMap<>();
     }
 
+    public Map<Integer, Leilao> getLeiloesAtivos(){
+        return leiloesAtivos;
+    }
+    
+    public void adicionarLeilao(int codigo, Leilao leilao){
+        leiloesAtivos.put(codigo, leilao);
+    }
+    
     public void darLance() {
 
     }

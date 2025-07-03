@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import dcc025.ufjf.auxiliar.Email;
 import dcc025.ufjf.exceptions.EmailException;
 
-import dcc025.ufjf.sistema.leilao.Leiloeiro;
+import dcc025.ufjf.sistema.leilao.Participante;
 
 /**
  *
@@ -60,7 +60,7 @@ public class TelaLogin {
                     logar(email, senha);
                 }
                 catch(EmailException ex){
-                    System.out.println("Erro: " + ex.getMessage());
+                    JOptionPane.showMessageDialog(null, ex.getMessage());
                 }
             }
         });
@@ -71,9 +71,9 @@ public class TelaLogin {
     }
     
     public void logar(Email email, String senha){
-        Leiloeiro leiloeiro = new Leiloeiro("Joao", "11649146698", email, senha);
-        MenuLeiloeiro menu = new MenuLeiloeiro(leiloeiro);
-        menu.getFrame().setVisible(true);
+        Participante p = new Participante("Joao", "11649146698", email, senha);
+        MenuParticipante menu = new MenuParticipante(p);
+        menu.setVisible(true);
         this.frame.setVisible(false);
     }
 }
