@@ -9,25 +9,16 @@ import java.util.Date;
  */
 public class Lance {
     
-    private final Item item;
     private final double valor;
     private final Participante participante;
     private final Date data;
     
-    public Lance(Item item, double valor, Participante participante){
-        this.item = item;
+    public Lance(double valor, Participante participante){
         this.valor = valor;
         this.participante = participante;
         this.data = new Date();
     }
-
-    /**
-     * @return the item
-     */
-    public Item getItem() {
-        return item;
-    }
-
+    
     /**
      * @return the valor
      */

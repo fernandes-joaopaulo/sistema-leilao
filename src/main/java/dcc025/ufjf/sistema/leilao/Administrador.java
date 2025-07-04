@@ -1,8 +1,9 @@
 package dcc025.ufjf.sistema.leilao;
 
 import dcc025.ufjf.auxiliar.Email;
-import java.util.Map;
-import java.util.HashMap;
+import dcc025.ufjf.exceptions.CPFException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -11,12 +12,12 @@ import java.util.HashMap;
  */
 public class Administrador extends Usuario{
     
-    public Administrador(String nome, String cpf, Email email, String senha){
+    public Administrador(String nome, String cpf, Email email, String senha) throws CPFException{
         super(nome, cpf, email, senha);
     }
     
-    public Map<Integer, Leilao> getLeiloesAtivos(){
-        Map<Integer, Leilao> ativos = new HashMap<>();
+    public List<Integer> getLeiloesAtivos(){
+        List<Integer> ativos = new ArrayList<>();
         return ativos;
     }
 }

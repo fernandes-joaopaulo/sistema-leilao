@@ -1,10 +1,11 @@
 package dcc025.ufjf.sistema.leilao;
 
+import dcc025.ufjf.persistence.LeilaoPersistence;
 import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.Set;
-import java.util.HashSet;
+import java.util.List;
 
 /**
  *
@@ -17,16 +18,18 @@ public class Leilao {
     private static int codAtual = 0;
     private final Leiloeiro leiloeiro;
     private Map<Integer, Participante> participantes;
-    private Set<Item> itens;
+    private List<Item> itens;
     private final Date inicio;
     private Date fim;
+    private boolean ativo;
     
-    public Leilao(Leiloeiro leiloeiro, Set<Item> itens){
+    public Leilao(Leiloeiro leiloeiro, List<Item> itens){
         this.codigo = codAtual++;
         this.leiloeiro = leiloeiro;
         this.participantes = new HashMap<>();
         this.itens = itens;
         this.inicio = new Date();
+        this.ativo = true;
     }
 
     /**
@@ -60,14 +63,14 @@ public class Leilao {
     /**
      * @return the itens
      */
-    public Set<Item> getItens() {
+    public List<Item> getItens() {
         return itens;
     }
 
     /**
      * @param itens the itens to set
      */
-    public void setItens(Set<Item> itens) {
+    public void setItens(List<Item> itens) {
         this.itens = itens;
     }
 
@@ -92,4 +95,29 @@ public class Leilao {
         this.fim = fim;
     }
     
+    public void salvar(){
+        LeilaoPersistence lp = new LeilaoPersistence();
+        lp.add(this);
+    }
+    
+    public void salvarExistente(){
+        LeilaoPersistence lp = new LeilaoPersistence();
+        System.out.println(this.getItens().getFirst().getMaiorLance());
+        lp.save(this);
+    }
+
+    /**
+     * @return the ativo
+     */
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+    /**
+     * @param ativo the ativo to set
+     */
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
 }

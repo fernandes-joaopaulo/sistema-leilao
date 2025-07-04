@@ -1,7 +1,9 @@
 package dcc025.ufjf.sistema.leilao;
 
 import dcc025.ufjf.auxiliar.Email;
-import java.util.Map;
+import dcc025.ufjf.auxiliar.ValidaCPF;
+import dcc025.ufjf.exceptions.CPFException;
+import java.util.List;
 
 /**
  *
@@ -13,19 +15,19 @@ public abstract class Usuario {
     private final int id;
     private static int idAtual = 0;
     private final String nome;
-    private final String cpf;
+    private String cpf;
     private Email email;
     private String senha;
         
-    public Usuario(String nome, String cpf, Email email, String senha){
+    public Usuario(String nome, String cpf, Email email, String senha) throws CPFException{
         this.id = idAtual++;
         this.nome = nome;
-        this.cpf = cpf;
+        setCpf(cpf);
         this.email = email;
         this.senha = senha;
     }
     
-    public abstract Map<Integer, Leilao> getLeiloesAtivos();
+    public abstract List<Integer> getLeiloesAtivos();
 
     /**
      * @return the id
@@ -74,6 +76,15 @@ public abstract class Usuario {
      */
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    /**
+     * @param cpf the cpf to set
+     */
+    public void setCpf(String cpf) throws CPFException {
+        if(!ValidaCPF.isCPF(cpf))
+            throw new CPFException();
+        this.cpf = cpf;
     }
    
 }
