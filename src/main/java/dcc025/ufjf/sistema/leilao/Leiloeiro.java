@@ -46,17 +46,21 @@ public class Leiloeiro extends Usuario {
     }
 
     public void encerrarLeilao(int codigo) {
+        
+        int cod = leiloesAtivos.indexOf(codigo);
+        leiloesAtivos.remove(cod);
+        salvar();
+        
         LeilaoPersistence lp = new LeilaoPersistence();
         List<Leilao> leiloes = lp.findAll();
         for (int l1 : leiloesAtivos) {
             for (Leilao l2 : leiloes) {
                 if (l1 == l2.getCodigo()) {
                     l2.setAtivo(false);
-                    l2.salvar();
+                    l2.salvarExistente();
                 }
             }
         }
-        salvar();
     }
 
     public void salvar() {

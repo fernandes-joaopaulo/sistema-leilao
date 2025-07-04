@@ -13,8 +13,6 @@ import java.awt.*;
 public class MenuAdministrador extends JFrame {
 
     private JButton botaoCadastrarUsuario;
-    private JButton botaoUsuariosAtivos;
-    private JButton botaoLeiloesAtivos;
     private JButton botaoSair;
 
     public MenuAdministrador() {
@@ -36,14 +34,6 @@ public class MenuAdministrador extends JFrame {
         botaoCadastrarUsuario.setMaximumSize(new Dimension(250, 40));
         botaoCadastrarUsuario.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        botaoUsuariosAtivos = new JButton("Usuários Ativos");
-        botaoUsuariosAtivos.setMaximumSize(new Dimension(250, 40));
-        botaoUsuariosAtivos.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        botaoLeiloesAtivos = new JButton("Leilões Ativos");
-        botaoLeiloesAtivos.setMaximumSize(new Dimension(250, 40));
-        botaoLeiloesAtivos.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         botaoSair = new JButton("Sair");
         botaoSair.setMaximumSize(new Dimension(250, 40));
         botaoSair.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -51,10 +41,6 @@ public class MenuAdministrador extends JFrame {
         painelPrincipal.add(saudacao);
         painelPrincipal.add(Box.createVerticalStrut(40));
         painelPrincipal.add(botaoCadastrarUsuario);
-        painelPrincipal.add(Box.createVerticalStrut(20));
-        painelPrincipal.add(botaoUsuariosAtivos);
-        painelPrincipal.add(Box.createVerticalStrut(20));
-        painelPrincipal.add(botaoLeiloesAtivos);
         painelPrincipal.add(Box.createVerticalStrut(20));
         painelPrincipal.add(botaoSair);
 

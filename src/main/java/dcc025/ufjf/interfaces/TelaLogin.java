@@ -31,7 +31,8 @@ public class TelaLogin {
         frame.setSize(350, 150);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null); // Centraliza a frame
-
+        frame.setResizable(false);
+        
         // Criação dos componentes
         JLabel labelEmail = new JLabel("Email:");
         JLabel labelSenha = new JLabel("Senha:");

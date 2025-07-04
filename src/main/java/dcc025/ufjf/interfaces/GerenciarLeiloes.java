@@ -137,7 +137,7 @@ public class GerenciarLeiloes extends JFrame {
 
             leiloeiro.encerrarLeilao(codigoLeilao);
             listaLeiloesModel.remove(indexSelecionado);
-
+            
             JOptionPane.showMessageDialog(null, "Leilão encerrado com sucesso.");
         } else {
             JOptionPane.showMessageDialog(null, "Selecione um leilão para encerrar.");

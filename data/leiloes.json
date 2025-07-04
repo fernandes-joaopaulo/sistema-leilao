@@ -1,0 +1,25 @@
+[{
+        "codigo": 0,
+        "leiloeiro": {
+            "leiloesAtivos": [],
+            "id": 1,
+            "nome": "Carlos",
+            "cpf": "11649146698",
+            "email": {
+                "email": "carlos@email.com",
+                "login": "carlos",
+                "dominio": "email.com"
+            },
+            "senha": "123"
+        },
+        "participantes": {},
+        "itens": [{
+                "titulo": "Carro",
+                "descricao": "carro 0km",
+                "foto_URL": "C:\\Users\\Joao Paulo\\Pictures\\1068313.jpg",
+                "lanceMinimo": 10000.0,
+                "lances": []
+            }],
+        "inicio": "Jul 4, 2025, 12:20:24 PM",
+        "ativo": false
+    }]

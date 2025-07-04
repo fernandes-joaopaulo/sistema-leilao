@@ -1,0 +1,12 @@
+[{
+        "leiloesAtivos": [],
+        "id": 0,
+        "nome": "João",
+        "cpf": "11649146698",
+        "email": {
+            "email": "joao@email.com",
+            "login": "joao",
+            "dominio": "email.com"
+        },
+        "senha": "123"
+    }]
