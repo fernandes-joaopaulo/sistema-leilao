@@ -3,8 +3,6 @@ package dcc025.ufjf.auxiliar;
 import dcc025.ufjf.exceptions.EmailException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -16,7 +14,6 @@ public class Email {
     private String email;
     private String login;
     private String dominio;
-
 
     public Email(String email) throws EmailException {
         setEmail(email);
