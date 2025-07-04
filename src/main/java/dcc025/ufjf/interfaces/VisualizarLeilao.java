@@ -1,6 +1,7 @@
 package dcc025.ufjf.interfaces;
 
 import dcc025.ufjf.sistema.leilao.Item;
+import dcc025.ufjf.sistema.leilao.Lance;
 import dcc025.ufjf.sistema.leilao.Leilao;
 import dcc025.ufjf.sistema.leilao.Usuario;
 import dcc025.ufjf.sistema.leilao.Participante;
@@ -17,16 +18,22 @@ import java.text.SimpleDateFormat;
 public class VisualizarLeilao extends JFrame {
 
     private Leilao leilao;
+    private Usuario usuario;
+
+    private JPanel painelPrincipal;
+    private JPanel painelItens;
+    private JPanel painelSuperior;
 
     public VisualizarLeilao(Leilao leilao, Usuario usuario) {
         this.leilao = leilao;
+        this.usuario = usuario;
 
         setTitle("Detalhes do Leilão");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        JPanel painelPrincipal = new JPanel(new BorderLayout(20, 20));
+        painelPrincipal = new JPanel(new BorderLayout(20, 20));
         painelPrincipal.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
         // Painel superior com informações básicas
@@ -34,13 +41,18 @@ public class VisualizarLeilao extends JFrame {
         JLabel labelCodigo = new JLabel("Código do Leilão: " + leilao.getCodigo());
         JLabel labelDataInicio = new JLabel("Data de Início: " + formatoData.format(leilao.getInicio()));
 
-        JPanel painelSuperior = new JPanel();
+        painelSuperior = new JPanel();
         painelSuperior.setLayout(new BoxLayout(painelSuperior, BoxLayout.Y_AXIS));
         painelSuperior.add(labelCodigo);
         painelSuperior.add(Box.createVerticalStrut(10));
         painelSuperior.add(labelDataInicio);
 
         painelPrincipal.add(painelSuperior, BorderLayout.NORTH);
+
+        carregaLista();
+    }
+
+    public void carregaLista() {
 
         // Painel central com os itens
         JPanel painelItens = new JPanel();
@@ -68,8 +80,8 @@ public class VisualizarLeilao extends JFrame {
 
             JPanel painelDescricaoEBotao = new JPanel(new BorderLayout(10, 10));
             painelDescricaoEBotao.add(labelDescricao, BorderLayout.CENTER);
-            
-            if(usuario instanceof Participante){
+
+            if (usuario instanceof Participante) {
                 // Cria botão de lance
                 JButton botaoLance = criaBotaoLance(item);
                 painelDescricaoEBotao.add(botaoLance, BorderLayout.EAST);
@@ -96,7 +108,7 @@ public class VisualizarLeilao extends JFrame {
 
         add(painelPrincipal);
     }
-    
+
     /**
      * Cria o botão de dar lance para um item específico.
      */
@@ -104,10 +116,30 @@ public class VisualizarLeilao extends JFrame {
         JButton botaoLance = new JButton("Dar Lance");
 
         botaoLance.addActionListener(e -> {
-            JOptionPane.showMessageDialog(this, "Função de dar lance ainda não implementada para: " + item.getTitulo());
-            // Aqui você pode abrir uma nova tela para digitar o valor do lance
+            double valorLance;
+            do {
+                String valorLanceStr = JOptionPane.showInputDialog("Digite o valor do lance: ");
+                valorLance = Double.parseDouble(valorLanceStr);
+                if (valorLance < item.getLanceMinimo()) {
+                    JOptionPane.showMessageDialog(null, "Lance deve ser maior ou igual ao lance mínimo!");
+                }
+            } while (valorLance < item.getLanceMinimo());
+
+            Participante p = (Participante) usuario;
+            Lance lance = new Lance(valorLance, p);
+            for (Item it : leilao.getItens()) {
+                if (it.equals(item)) {
+                    it.adicionarLance(lance);
+                }
+            }
+            leilao.salvarExistente();
+
+            dispose();
+            VisualizarLeilao tela = new VisualizarLeilao(leilao, usuario);  //atualiza a tela
+            tela.setVisible(true);
         });
 
         return botaoLance;
     }
+
 }

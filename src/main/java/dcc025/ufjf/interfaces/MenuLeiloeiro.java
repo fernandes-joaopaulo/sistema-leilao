@@ -73,6 +73,7 @@ public class MenuLeiloeiro {
                 //Exibe tela de gerenciamento dos leiloes ativos
                 GerenciarLeiloes telaGerenciar = new GerenciarLeiloes(leiloeiro);
                 telaGerenciar.setVisible(true);
+                getFrame().dispose();
             }
         });
 
@@ -82,6 +83,7 @@ public class MenuLeiloeiro {
                 //Exibe tela de criação do leilão
                 CriarLeilao telaCriar = new CriarLeilao(leiloeiro);
                 telaCriar.setVisible(true);
+                getFrame().dispose();
             }
         });
         

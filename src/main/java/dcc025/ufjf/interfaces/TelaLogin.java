@@ -4,9 +4,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
+
 import dcc025.ufjf.auxiliar.Email;
 import dcc025.ufjf.exceptions.EmailException;
-
+import dcc025.ufjf.persistence.LeiloeiroPersistence;
+import dcc025.ufjf.persistence.ParticipantePersistence;
+import dcc025.ufjf.sistema.leilao.Leiloeiro;
 import dcc025.ufjf.sistema.leilao.Participante;
 
 /**
@@ -71,9 +75,40 @@ public class TelaLogin {
     }
     
     public void logar(Email email, String senha){
-        Participante p = new Participante("Joao", "11649146698", email, senha);
-        MenuParticipante menu = new MenuParticipante(p);
-        menu.setVisible(true);
-        this.frame.setVisible(false);
+       
+            LeiloeiroPersistence lp = new LeiloeiroPersistence();
+            List<Leiloeiro> leiloeiros = lp.findAll();
+            
+            ParticipantePersistence pp = new ParticipantePersistence();
+            List<Participante> participantes = pp.findAll();
+            
+            boolean logou = false;
+            for(Leiloeiro l : leiloeiros){
+                if(l.getEmail().getEmail().equals(email.getEmail()) && l.getSenha().equals(senha)){
+                    MenuLeiloeiro menu = new MenuLeiloeiro(l);
+                    menu.getFrame().setVisible(true);
+                    this.frame.dispose();
+                    logou = true;
+                }
+            }
+
+            for(Participante p : participantes){
+                if(p.getEmail().getEmail().equals(email.getEmail()) && p.getSenha().equals(senha)){
+                    MenuParticipante menu = new MenuParticipante(p);
+                    menu.setVisible(true);
+                    this.frame.dispose();
+                    logou = true;
+                }
+            }
+            
+            if(email.getEmail().equals("admin@email.com") && senha.equals("admin")){
+                MenuAdministrador menu = new MenuAdministrador();
+                menu.setVisible(true);
+                this.frame.dispose();
+                logou = true;
+            }
+            
+            if(!logou)
+                JOptionPane.showMessageDialog(null, "Email ou senha inválidos!");
     }
 }

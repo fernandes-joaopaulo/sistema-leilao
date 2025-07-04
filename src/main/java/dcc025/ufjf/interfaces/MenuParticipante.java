@@ -17,7 +17,6 @@ public class MenuParticipante extends JFrame {
     private Participante participante;
 
     private JButton botaoVisualizarLeiloes;
-    private JButton botaoBuscarLeiloes;
     private JButton botaoLogout;
 
     public MenuParticipante(Participante participante) {
@@ -40,10 +39,6 @@ public class MenuParticipante extends JFrame {
         botaoVisualizarLeiloes.setMaximumSize(new Dimension(250, 40));
         botaoVisualizarLeiloes.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        botaoBuscarLeiloes = new JButton("Buscar Leilões");
-        botaoBuscarLeiloes.setMaximumSize(new Dimension(250, 40));
-        botaoBuscarLeiloes.setAlignmentX(Component.CENTER_ALIGNMENT);
-
         botaoLogout = new JButton("Sair");
         botaoLogout.setMaximumSize(new Dimension(250, 40));
         botaoLogout.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -51,8 +46,6 @@ public class MenuParticipante extends JFrame {
         painelPrincipal.add(saudacao);
         painelPrincipal.add(Box.createVerticalStrut(40));
         painelPrincipal.add(botaoVisualizarLeiloes);
-        painelPrincipal.add(Box.createVerticalStrut(20));
-        painelPrincipal.add(botaoBuscarLeiloes);
         painelPrincipal.add(Box.createVerticalStrut(20));
         painelPrincipal.add(botaoLogout);
 

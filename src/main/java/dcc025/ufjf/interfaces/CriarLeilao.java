@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import java.io.File;
 import java.util.*;
+import java.util.List;
 
 /**
  *
@@ -33,7 +34,7 @@ public class CriarLeilao extends JFrame {
     private JButton botaoEditarItem;
     private JButton botaoSelecionarImagem;
 
-    private Set<Item> itens;
+    private List<Item> itens;
 
     private Leiloeiro leiloeiro;
 
@@ -41,7 +42,7 @@ public class CriarLeilao extends JFrame {
 
     public CriarLeilao(Leiloeiro leiloeiro) {
         this.leiloeiro = leiloeiro;
-        this.itens = new HashSet<>();
+        this.itens = new ArrayList<>();
 
         setTitle("Criar Leilão");
         setSize(600, 600);
@@ -235,9 +236,19 @@ public class CriarLeilao extends JFrame {
                     JOptionPane.showMessageDialog(null, "Adicione pelo menos um item.");
                     return;
                 }
+                
+                //Salva leilao em disco
                 Leilao leilao = new Leilao(leiloeiro, itens);
-                leiloeiro.adicionarLeilao(leilao.getCodigo(), leilao);
+                leilao.salvar();
+                
+                //Salva usuario em disco
+                leiloeiro.adicionarLeilao(leilao.getCodigo());
+                leiloeiro.salvar();
+                
                 JOptionPane.showMessageDialog(null, "Leilão criado com sucesso! Código: " + leilao.getCodigo());
+                
+                MenuLeiloeiro menu = new MenuLeiloeiro(leiloeiro);
+                menu.getFrame().setVisible(true);
                 dispose();
             }
         });
