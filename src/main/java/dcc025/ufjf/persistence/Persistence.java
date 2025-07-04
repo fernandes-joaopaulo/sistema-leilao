@@ -12,5 +12,6 @@ public interface Persistence<T> {
     String DIRECTORY = "data";
     public void save(List<T> itens);
     public List<T> findAll();
-
+    public void add(T item);
+    public void save(T item);
 }
